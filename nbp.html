@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Opis">
+        <meta name="keywords" content="Słowo kluczowe 1, Słowo kluczowe 2">
+        <meta name="author" content="Tomasz Gądek">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>NBP</title>
+        <style>
+            table, td, th{
+                border-collapse: collapse;
+border: 1px solid #000;
+            }
+            td{
+                padding: 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <p>
+            Aktualnie obowiązująca cena złota w dniu: <span id="date"></span>
+        </p>
+        <table>
+<tr><th>Data</th><th>Cena złota</th></tr>
+<tr><td id="date0"></td><td id="price0"></td></tr>
+<tr><td id="date1"></td><td id="price1"></td></tr>
+<tr><td id="date2"></td><td id="price2"></td></tr>
+<tr><td id="date3"></td><td id="price3"></td></tr>
+<tr><td id="date4"></td><td id="price4"></td></tr>
+        </table>
+        <p>
+            Cena: <span id="price"></span> za 1 g.
+        </p>
+
+        <script type="text/javascript">
+            // wprowadz adres do przegladarki i zobacz, co takiego sie wyswietli
+            fetch('http://api.nbp.pl/api/cenyzlota/last/5?format=json')
+                .then(response => response.json())
+                .then(response => {
+                    // tutaj obslugujemy dane (parametr 'response') z serwera (json)
+                    console.log(response); 
+
+                    // 'response' to tablica - odwoluje sie do 1 elementu (idx = 0)
+                    let priceGold = response[0];
+                    let priceGold1 = response[1];
+                    let priceGold2 = response[2];
+                    let priceGold3 = response[3];
+                    let priceGold4 = response[4];
+
+
+
+                    console.log('cena = ' + priceGold.cena);
+                    console.log('data = ' + priceGold.data);
+
+                    document.getElementById("price").innerHTML = priceGold.cena;
+                    document.getElementById("date").innerHTML = priceGold.data;
+                    //tabelka
+                    document.getElementById("date0").innerHTML = priceGold.data;
+                    document.getElementById("price0").innerHTML = priceGold.cena;
+
+                    document.getElementById("date1").innerHTML = priceGold1.data;
+                    document.getElementById("price1").innerHTML = priceGold1.cena;
+
+                    document.getElementById("date2").innerHTML = priceGold2.data;
+                    document.getElementById("price2").innerHTML = priceGold2.cena;
+
+                    document.getElementById("date3").innerHTML = priceGold3.data;
+                    document.getElementById("price3").innerHTML = priceGold3.cena;
+
+                    document.getElementById("date4").innerHTML = priceGold4.data;
+                    document.getElementById("price4").innerHTML = priceGold4.cena;
+
+                   
+
+                })
+                .catch(err => console.error(err)); // obsluga w przypadku bledu!
+        </script>
+    </body>
+</html>
